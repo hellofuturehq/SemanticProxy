@@ -16,6 +16,7 @@ class WebUrlToContent extends AbstractTransformer {
 	public function transform($inputData) {
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_URL,$inputData);
 		$result=curl_exec($ch);
@@ -46,7 +47,7 @@ class ToInvalidJsonString extends AbstractTransformer {
 }
 
 
-$data = TransformerFactory::create('https://motor-development.helloumbra.com/current/api')
+$data = TransformerFactory::create('http://motor-development.helloumbra.com/current/api')
 	->to('WebUrlToContent')
 	#->to('ToInvalidJsonString')
 	->to(__NAMESPACE__ . '\\AsJson')
