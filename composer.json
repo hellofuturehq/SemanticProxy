@@ -1,0 +1,31 @@
+{
+    "name": "hellofuture/semanticproxy",
+    "description": "A library for reading and transforming content in a chainable way",
+    "keywords": [
+        "crawler", "xml", "json", "scraping"
+    ],
+    "homepage": "https://github.com/hellofutureab/SemanticProxy",
+    "authors": [
+        {
+            "name": "Olaf Schneider",
+            "email": "olaf@hellofuture.se",
+            "homepage": "http://www.hellofuture.se"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "support": {
+        "issues": "https://github.com/hellofutureab/SemanticProxy/issues",
+        "source": "https://github.com/hellofutureab/SemanticProxy"
+    },
+    "autoload": {
+        "psr-4": { "HelloFuture\\SemanticProxy\\": "src/SemanticProxy/" }
+    },
+    "autoload-dev": {
+        "classmap": [ "tests" ]
+    }
+}
