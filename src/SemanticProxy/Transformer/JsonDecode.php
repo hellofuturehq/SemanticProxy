@@ -7,7 +7,7 @@ use HelloFuture\SemanticProxy\Exceptions\JsonException;
 
 class JsonDecode extends AbstractTransformer {
 
-	public function transform($input) {
+	protected function transform($input) {
 		if ((is_string($input) && trim($input) == '') || is_null($input)) {
 			throw new EmptyException;
 		}

@@ -8,7 +8,7 @@ class WebUrlToContent extends AbstractTransformer {
 
 	const DEFAULT_TIMEOUT = 120;
 
-	public function transform($inputData) {
+	protected function transform($inputData) {
 
 		$ch = curl_init();
 
