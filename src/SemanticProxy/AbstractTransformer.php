@@ -22,6 +22,10 @@ abstract class AbstractTransformer implements TransformerInterface {
 		$this->options = (object) $options;
 	}
 
+	static public function create($input, $options = array()) {
+		return new static($input, $options);
+	}
+
 	public function getInner() {
 		return $this->innerTransformer;
 	}
@@ -57,9 +61,9 @@ abstract class AbstractTransformer implements TransformerInterface {
 		if ($inner) {
 			$path = $inner->getScent();
 		} else {
-			$path = [['data' => $this->getData(), 'options' => $this->getOptions()]];
+			$path = [(object) ['data' => $this->getData(), 'options' => $this->getOptions()]];
 		}
-		array_push($path, ['class' => get_class($this)]);
+		array_push($path, (object) ['class' => get_class($this), 'options' => $this->getOptions()]);
 		return $path;
 	}
 
@@ -67,7 +71,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return $this->options;
 	}
 
-	public function getOption($key, $default) {
+	public function getOption($key, $default = null) {
 		$options = $this->getOptions();
 		return isset($options->$key) ? $options->$key : $default;
 	}
