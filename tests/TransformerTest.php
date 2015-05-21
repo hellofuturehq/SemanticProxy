@@ -2,7 +2,7 @@
 
 use HelloFuture\SemanticProxy\AbstractTransformer;
 use HelloFuture\SemanticProxy\ValidationException;
-use HelloFuture\SemanticProxy\Value;
+use HelloFuture\SemanticProxy\Transformers\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -25,7 +25,7 @@ class CallTest extends PHPUnit_Framework_TestCase {
 				'options' => (object) []
 			],
 			(object) [
-				'class'   => 'HelloFuture\SemanticProxy\Value',
+				'class'   => 'HelloFuture\\SemanticProxy\\Transformers\\Value',
 				'options' => (object) []
 			],
 		];
