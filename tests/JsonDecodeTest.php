@@ -28,7 +28,7 @@ class JsonDecodeTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException HelloFuture\SemanticProxy\Exceptions\JsonException
-	 * @expectedExceptionCode 2
+	 * @expectedExceptionCode 3
 	 */
 	public function testInvalidJson() {
 

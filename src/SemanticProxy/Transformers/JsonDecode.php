@@ -3,7 +3,6 @@
 namespace HelloFuture\SemanticProxy\Transformers;
 
 use HelloFuture\SemanticProxy\AbstractTransformer;
-
 use HelloFuture\SemanticProxy\Exceptions\EmptyException;
 use HelloFuture\SemanticProxy\Exceptions\JsonException;
 
