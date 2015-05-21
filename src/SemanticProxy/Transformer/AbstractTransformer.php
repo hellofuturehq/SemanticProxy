@@ -37,7 +37,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return $this->innerTransformer;
 	}
 
-	final public function getInputData() {
+	public function getInputData() {
 		if (!$this->hasInputData) {
 			if ($this->getInner()) {
 				$this->inputData    = $this->getInner()->getData();
@@ -47,7 +47,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return $this->inputData;
 	}
 
-	final public function getOutputData() {
+	public function getOutputData() {
 		if (!$this->hasOutputData) {
 			$this->outputData    = $this->transform($this->getInputData());
 			$this->hasOutputData = true;
