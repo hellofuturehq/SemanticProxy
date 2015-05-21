@@ -12,6 +12,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 	private $hasOutputData    = false;
 	private $inputData        = null;
 	private $outputData       = null;
+	private $meta             = [];
 
 	public function __construct(/* Transformer or mixed */ $input, $options = array()) {
 		if (is_a($input, 'HelloFuture\\SemanticProxy\\TransformerInterface')) {
@@ -30,11 +31,11 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return [];
 	}
 
-	public function getInner() {
+	final public function getInner() {
 		return $this->innerTransformer;
 	}
 
-	public function getInputData() {
+	final public function getInputData() {
 		if (!$this->hasInputData) {
 			if ($this->getInner()) {
 				$this->inputData    = $this->getInner()->getData();
@@ -44,7 +45,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return $this->inputData;
 	}
 
-	public function getOutputData() {
+	final public function getOutputData() {
 		if (!$this->hasOutputData) {
 			$this->outputData    = $this->transform($this->getInputData());
 			$this->hasOutputData = true;
@@ -52,11 +53,11 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return $this->outputData;
 	}
 
-	public function getData() {
+	final public function getData() {
 		return $this->getOutputData();
 	}
 
-	public function getScent() {
+	final public function getScent() {
 		$inner = $this->getInner();
 		if ($inner) {
 			$path = $inner->getScent();
@@ -67,13 +68,30 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return $path;
 	}
 
-	public function getOptions() {
+	final public function getOptions() {
 		return $this->options;
 	}
 
-	public function getOption($key, $default = null) {
+	final public function getOption($key, $default = null) {
 		$options = $this->getOptions();
 		return isset($options[$key]) ? $options[$key] : $default;
+	}
+
+	final public function getMetaValue($key, $default = null) {
+		if (isset($this->meta[$key])) {
+			return $this->meta[$key];
+		} else {
+			$inner = $this->getInner();
+			if ($inner) {
+				return $inner->getMetaValue($key, $default);
+			} else {
+				return $default;
+			}
+		}
+	}
+
+	final public function setMetaValue($key, $value) {
+		$this->meta[$key] = $value;
 	}
 
 	abstract protected function transform($inputData);
