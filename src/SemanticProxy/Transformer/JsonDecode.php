@@ -1,8 +1,7 @@
 <?php
 
-namespace HelloFuture\SemanticProxy\Transformers;
+namespace HelloFuture\SemanticProxy\Transformer;
 
-use HelloFuture\SemanticProxy\AbstractTransformer;
 use HelloFuture\SemanticProxy\Exceptions\EmptyException;
 use HelloFuture\SemanticProxy\Exceptions\JsonException;
 

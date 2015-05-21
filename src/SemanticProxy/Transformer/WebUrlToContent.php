@@ -1,8 +1,7 @@
 <?php
 
-namespace HelloFuture\SemanticProxy\Transformers;
+namespace HelloFuture\SemanticProxy\Transformer;
 
-use HelloFuture\SemanticProxy\AbstractTransformer;
 use HelloFuture\SemanticProxy\Exceptions\CurlException;
 
 class WebUrlToContent extends AbstractTransformer {

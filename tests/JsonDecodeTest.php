@@ -1,13 +1,13 @@
 <?php
 
-use HelloFuture\SemanticProxy\Transformers\JsonDecode;
-use HelloFuture\SemanticProxy\Transformers\Value;
+use HelloFuture\SemanticProxy\Transformer\JsonDecode;
+use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class JsonDecodeTest extends PHPUnit_Framework_TestCase {
 
-	const JSON_DECODE = 'HelloFuture\\SemanticProxy\\Transformers\\JsonDecode';
+	const JSON_DECODE = 'HelloFuture\\SemanticProxy\\Transformer\\JsonDecode';
 
 	public function testValidJson() {
 

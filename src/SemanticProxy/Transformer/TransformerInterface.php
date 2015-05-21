@@ -1,6 +1,6 @@
 <?php
 
-namespace HelloFuture\SemanticProxy;
+namespace HelloFuture\SemanticProxy\Transformer;
 
 interface TransformerInterface {
 

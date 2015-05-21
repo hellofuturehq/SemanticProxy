@@ -1,8 +1,6 @@
 <?php
 
-namespace HelloFuture\SemanticProxy\Transformers;
-
-use HelloFuture\SemanticProxy\AbstractTransformer;
+namespace HelloFuture\SemanticProxy\Transformer;
 
 class Value extends AbstractTransformer {
 

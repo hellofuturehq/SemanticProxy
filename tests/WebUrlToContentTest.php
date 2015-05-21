@@ -1,14 +1,14 @@
 <?php
 
-use HelloFuture\SemanticProxy\Transformers\WebUrlToContent;
-use HelloFuture\SemanticProxy\Transformers\Value;
+use HelloFuture\SemanticProxy\Transformer\WebUrlToContent;
+use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class WebUrlToContentTest extends PHPUnit_Framework_TestCase {
 
-	const JSON_DECODE = 'HelloFuture\\SemanticProxy\\Transformers\\JsonDecode';
-	const WEB_URL_TO_CONTENT = 'HelloFuture\\SemanticProxy\\Transformers\\WebUrlToContent';
+	const JSON_DECODE = 'HelloFuture\\SemanticProxy\\Transformer\\JsonDecode';
+	const WEB_URL_TO_CONTENT = 'HelloFuture\\SemanticProxy\\Transformer\\WebUrlToContent';
 
 	public function testValidWebUrl() {
 

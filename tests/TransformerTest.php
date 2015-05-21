@@ -1,8 +1,8 @@
 <?php
 
-use HelloFuture\SemanticProxy\AbstractTransformer;
 use HelloFuture\SemanticProxy\Exceptions\Exception as ValidationException;
-use HelloFuture\SemanticProxy\Transformers\Value;
+use HelloFuture\SemanticProxy\Transformer\AbstractTransformer;
+use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -25,7 +25,7 @@ class CallTest extends PHPUnit_Framework_TestCase {
 				'options' => []
 			],
 			(object) [
-				'class'   => 'HelloFuture\\SemanticProxy\\Transformers\\Value',
+				'class'   => 'HelloFuture\\SemanticProxy\\Transformer\\Value',
 				'options' => []
 			],
 		];
@@ -92,8 +92,8 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		$transformer2 = new Palindromify($transformer1);
 
 		$this->assertSame($transformer2->getInner(), $transformer1);
-		$this->assertInstanceOf('HelloFuture\\SemanticProxy\\AbstractTransformer', $transformer1->getInner());
-		$this->assertInstanceOf('HelloFuture\\SemanticProxy\\AbstractTransformer', $transformer2->getInner()->getInner());
+		$this->assertInstanceOf('HelloFuture\\SemanticProxy\\Transformer\\AbstractTransformer', $transformer1->getInner());
+		$this->assertInstanceOf('HelloFuture\\SemanticProxy\\Transformer\\AbstractTransformer', $transformer2->getInner()->getInner());
 		$this->assertNull($transformer1->getInner()->getInner());
 		$this->assertSame($transformer1->getData(), $transformer2->getInputData());
 	}

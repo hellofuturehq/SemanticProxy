@@ -1,10 +1,8 @@
 <?php
 
-namespace HelloFuture\SemanticProxy;
+namespace HelloFuture\SemanticProxy\Transformer;
 
 abstract class AbstractTransformer implements TransformerInterface {
-
-	use ChainableTrait;
 
 	private $innerTransformer = null;
 	private $options          = null;
@@ -15,7 +13,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 	private $meta             = [];
 
 	public function __construct(/* Transformer or mixed */ $input, $options = array()) {
-		if (is_a($input, 'HelloFuture\\SemanticProxy\\TransformerInterface')) {
+		if (is_a($input, 'HelloFuture\\SemanticProxy\\Transformer\\TransformerInterface')) {
 			$this->innerTransformer = $input;
 		} else {
 			$this->inputData = $input;
@@ -25,6 +23,10 @@ abstract class AbstractTransformer implements TransformerInterface {
 
 	static public function create($input, $options = array()) {
 		return new static($input, $options);
+	}
+
+	public function to($className, $options = array()) {
+		return new $className($this, $options);
 	}
 
 	public function getDefaultOptions() {
