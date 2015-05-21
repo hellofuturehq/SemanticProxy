@@ -42,11 +42,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 
 	public function getOutputData() {
 		if (!$this->hasOutputData) {
-			$inputData = $this->getInputData();
-			if (!$this->validate($inputData)) {
-				throw new ValidationException('invalid input data in ' . get_class($this));
-			}
-			$this->outputData    = $this->transform($inputData);
+			$this->outputData    = $this->transform($this->getInputData());
 			$this->hasOutputData = true;
 		}
 		return $this->outputData;
@@ -74,10 +70,6 @@ abstract class AbstractTransformer implements TransformerInterface {
 	public function getOption($key, $default = null) {
 		$options = $this->getOptions();
 		return isset($options->$key) ? $options->$key : $default;
-	}
-
-	public function validate($inputData) {
-		return true;
 	}
 
 	abstract protected function transform($inputData);

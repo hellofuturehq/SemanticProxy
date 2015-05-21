@@ -1,7 +1,7 @@
 <?php
 
 use HelloFuture\SemanticProxy\AbstractTransformer;
-use HelloFuture\SemanticProxy\ValidationException;
+use HelloFuture\SemanticProxy\Exceptions\Exception as ValidationException;
 use HelloFuture\SemanticProxy\Transformers\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -124,17 +124,7 @@ class CallTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException HelloFuture\SemanticProxy\ValidationException
-	 */
-	public function testInvalidInValidateMethod() {
-
-		$transformer = Value::create('BREAK-V')->to('StrangeTransformer');
-		$transformer->getData();
-
-	}
-
-	/**
-	 * @expectedException HelloFuture\SemanticProxy\ValidationException
+	 * @expectedException HelloFuture\SemanticProxy\Exceptions\Exception
 	 */
 	public function testInvalidInTransformMethod() {
 
@@ -175,10 +165,6 @@ class Repeat extends AbstractTransformer {
 }
 
 class StrangeTransformer extends AbstractTransformer {
-
-	public function validate($inputData) {
-		return $inputData != 'BREAK-V';
-	}
 
 	public function transform($inputData) {
 		if ($inputData == 'BREAK-T') {
