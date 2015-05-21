@@ -19,11 +19,15 @@ abstract class AbstractTransformer implements TransformerInterface {
 		} else {
 			$this->inputData = $input;
 		}
-		$this->options = (object) $options;
+		$this->options = array_merge($this->getDefaultOptions(), $options);
 	}
 
 	static public function create($input, $options = array()) {
 		return new static($input, $options);
+	}
+
+	public function getDefaultOptions() {
+		return [];
 	}
 
 	public function getInner() {
@@ -69,7 +73,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 
 	public function getOption($key, $default = null) {
 		$options = $this->getOptions();
-		return isset($options->$key) ? $options->$key : $default;
+		return isset($options[$key]) ? $options[$key] : $default;
 	}
 
 	abstract protected function transform($inputData);

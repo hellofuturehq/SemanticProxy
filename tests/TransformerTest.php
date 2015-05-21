@@ -22,11 +22,11 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		$expectedScent = [
 			(object) [
 				'data'    => 'foo23',
-				'options' => (object) []
+				'options' => []
 			],
 			(object) [
 				'class'   => 'HelloFuture\\SemanticProxy\\Transformers\\Value',
-				'options' => (object) []
+				'options' => []
 			],
 		];
 
@@ -105,7 +105,7 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame(3, $transformer1->getOption('number'));
 		$this->assertSame('coldcoldcold', $transformer1->getData());
 
-		$expected = (object) ['number' => 3];
+		$expected = ['number' => 3];
 
 		$this->assertEquals($expected, $transformer1->getOptions());
 
@@ -113,6 +113,12 @@ class CallTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertNull($transformer1->getOption('unknown'));
 		$this->assertSame('?', $transformer1->getOption('unknown', '?'));
+
+		// default param
+
+		$transformer2 = Value::create('chilly')->to('Repeat');
+		$this->assertSame(1, $transformer2->getOption('number'));
+
 	}
 
 	public function testValid() {
@@ -153,13 +159,12 @@ class Duplicate extends AbstractTransformer {
 
 class Repeat extends AbstractTransformer {
 
-	public function __construct($input, $options = array()) {
-		$options = array_merge(['number' => 1], $options);
-		parent::__construct($input, $options);
-	}
-
 	public function transform($inputData) {
 		return str_repeat($inputData, $this->getOption('number'));
+	}
+
+	public function getDefaultOptions() {
+		return ['number' => 1];
 	}
 
 }
