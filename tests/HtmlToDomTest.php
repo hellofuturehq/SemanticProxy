@@ -11,9 +11,9 @@ class HtmlToDomTest extends PHPUnit_Framework_TestCase {
 
 	public function testValidDom() {
 
-		$xml = '<p>Snö';
+		$html = '<p>Snö';
 
-		$transformer = Value::create($xml)->to(self::HTML_TO_DOM);
+		$transformer = Value::create($html)->to(self::HTML_TO_DOM);
 		$data        = $transformer->getData();
 		$this->assertInstanceOf('DomDocument', $data);
 		$this->assertRegExp('/<p>Snö<\/p>/', $data->saveXml());
