@@ -6,8 +6,6 @@ abstract class AbstractTransformer implements TransformerInterface {
 
 	private $innerTransformer = null;
 	private $options          = null;
-	private $hasInputData     = false;
-	private $hasOutputData    = false;
 	private $inputData        = null;
 	private $outputData       = null;
 	private $meta             = [];
@@ -38,21 +36,15 @@ abstract class AbstractTransformer implements TransformerInterface {
 	}
 
 	public function getInputData() {
-		if (!$this->hasInputData) {
-			if ($this->getInner()) {
-				$this->inputData    = $this->getInner()->getData();
-				$this->hasInputData = true;
-			}
+		if ($this->getInner()) {
+			return $this->getInner()->getData();
+		} else {
+			return $this->inputData;
 		}
-		return $this->inputData;
 	}
 
 	public function getOutputData() {
-		if (!$this->hasOutputData) {
-			$this->outputData    = $this->transform($this->getInputData());
-			$this->hasOutputData = true;
-		}
-		return $this->outputData;
+		return $this->transform($this->getInputData());
 	}
 
 	final public function getData() {
