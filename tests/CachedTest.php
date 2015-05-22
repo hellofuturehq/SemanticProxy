@@ -40,19 +40,18 @@ class CachedTest extends PHPUnit_Framework_TestCase {
 
 		$transformer1 = Value::create('')->to('Randomize')->to(self::CACHED, $options);
 		$data         = $transformer1->getData();
-		$this->assertSame($data, $transformer1->getData());
+		$this->assertSame($data, $transformer1->getData()); // Randomize::$counter++ since first read
 
 		// make the cache file outdated
 		$key  = $transformer1->getMetaValue('cacheKey');
 		$path = $transformer1->getMetaValue('cache')->getPath($key);
 		touch($path, time() - 1000000);
-		unlink($path);
 		clearstatcache();
 
 		$transformer2 = Value::create('')->to('Randomize')->to(self::CACHED, $options);
-		$this->assertNotEquals($data, $transformer1->getData());
-		$this->assertNotEquals($data, $transformer2->getData());
-		$this->assertSame(2, Randomize::getCounter());
+		$this->assertNotEquals($data, $transformer1->getData()); // Randomize::$counter++ since outdated
+		$this->assertNotEquals($data, $transformer2->getData()); // Randomize::$counter++ since first read
+		$this->assertSame(3, Randomize::getCounter());
 
 
 	}
@@ -76,9 +75,9 @@ class CachedTest extends PHPUnit_Framework_TestCase {
 		];
 	}
 
-	// write error
-	// read error
-	// outdated
+	// test write error (when not in loose mode)
+	// test read error  (when not in loose mode)
+	// lvl2 ?
 
 }
 
