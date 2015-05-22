@@ -34,6 +34,7 @@ class WebUrlToContentTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @medium
 	 * @expectedException HelloFuture\SemanticProxy\Exceptions\CurlException
 	 * @expectedExceptionCode 4
 	 */
@@ -42,6 +43,7 @@ class WebUrlToContentTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
+	 * @medium
 	 * @expectedException HelloFuture\SemanticProxy\Exceptions\CurlException
 	 * @expectedExceptionCode 3
 	 */
