@@ -71,7 +71,6 @@ class CachedTest extends PHPUnit_Framework_TestCase {
 		return [
 			'path'                => __DIR__ . '/cache/',
 			'timeToLive'          => 3600,
-			'timeToLiveOnFailure' => 86400,
 		];
 	}
 
