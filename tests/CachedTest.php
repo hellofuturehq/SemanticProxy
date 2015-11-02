@@ -67,6 +67,13 @@ class CachedTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame('arctic fox', $transformer1->getData());
 	}
 
+	/**
+	 *	@expectedException HelloFuture\SemanticProxy\Exceptions\InvalidOptionsException
+	 */
+	public function testNoPathOption() {
+		$transformer1 = Value::create('polar bear')->to(self::CACHED, []);
+	}
+
 	protected function getCacheOptions() {
 		return [
 			'path'                => __DIR__ . '/cache/',

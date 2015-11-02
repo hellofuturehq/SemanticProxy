@@ -2,6 +2,8 @@
 
 namespace HelloFuture\SemanticProxy\Transformer;
 
+use HelloFuture\SemanticProxy\Exceptions\InvalidOptionsException;
+
 abstract class AbstractTransformer implements TransformerInterface {
 
 	private $innerTransformer = null;
@@ -17,6 +19,9 @@ abstract class AbstractTransformer implements TransformerInterface {
 			$this->inputData = $input;
 		}
 		$this->options = array_merge($this->getDefaultOptions(), $options);
+		if (!$this->validateOptions()) {
+			throw new InvalidOptionsException('invalid call of ' . get_class($this));
+		}
 	}
 
 	static public function create($input, $options = array()) {
@@ -89,5 +94,19 @@ abstract class AbstractTransformer implements TransformerInterface {
 	}
 
 	abstract protected function transform($inputData);
+
+	public function validateOptions() {
+		foreach($this->rules() as $option => $pattern) {
+			$value = $this->getOption($option);
+			if (is_null($value) || !preg_match($pattern, $value)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public function rules() {
+		return [];
+	}
 
 }

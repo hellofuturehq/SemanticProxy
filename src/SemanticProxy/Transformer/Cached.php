@@ -53,4 +53,10 @@ class Cached extends AbstractTransformer {
 		];
 	}
 
+	public function rules() {
+		return [
+			'path' => '/./',
+		];
+	}
+
 }
