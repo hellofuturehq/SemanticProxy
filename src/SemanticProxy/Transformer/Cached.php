@@ -53,7 +53,7 @@ class Cached extends AbstractTransformer {
 		];
 	}
 
-	public function rules() {
+	public function optionRules() {
 		return [
 			'path' => '/./',
 		];

@@ -96,7 +96,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 	abstract protected function transform($inputData);
 
 	public function validateOptions() {
-		foreach($this->rules() as $option => $pattern) {
+		foreach($this->optionRules() as $option => $pattern) {
 			$value = $this->getOption($option);
 			if (is_null($value) || !preg_match($pattern, $value)) {
 				return false;
@@ -105,7 +105,7 @@ abstract class AbstractTransformer implements TransformerInterface {
 		return true;
 	}
 
-	public function rules() {
+	public function optionRules() {
 		return [];
 	}
 
