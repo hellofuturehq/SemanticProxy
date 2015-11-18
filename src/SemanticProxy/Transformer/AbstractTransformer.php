@@ -15,7 +15,7 @@ abstract class AbstractTransformer implements InputInterface, OutputInterface {
 	private $meta             = [];
 
 	public function __construct(/* Transformer or mixed */ $input, $options = array()) {
-		if (is_a($input, 'HelloFuture\\SemanticProxy\\Transformer\\TransformerInterface')) {
+		if (is_a($input, 'HelloFuture\\SemanticProxy\\OutputInterface')) {
 			$this->innerTransformer = $input;
 		} else {
 			$this->inputData = $input;
