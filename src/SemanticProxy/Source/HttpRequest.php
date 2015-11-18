@@ -1,18 +1,26 @@
 <?php
 
-namespace HelloFuture\SemanticProxy\Transformer;
+namespace HelloFuture\SemanticProxy\Source;
 
 use HelloFuture\SemanticProxy\Exceptions\CurlException;
 
-class WebUrlToContent extends AbstractTransformer {
+class HttpRequest extends AbstractSource {
 
 	const DEFAULT_TIMEOUT = 120;
 
-	protected function transform($inputData) {
+	public function __construct($options = []) {
+		if (is_string($options)) {
+			$options = ['url' => $options];
+		}
+		parent::__construct($options);
+	}
 
-		$ch = curl_init();
+	public function getData() {
 
-		curl_setopt($ch, CURLOPT_URL,$inputData);
+		$url = $this->getOption('url');
+		$ch  = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL,$url);
 
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
