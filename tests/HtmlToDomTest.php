@@ -1,7 +1,7 @@
 <?php
 
+use HelloFuture\SemanticProxy\Source\Value;
 use HelloFuture\SemanticProxy\Transformer\JsonDecode;
-use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

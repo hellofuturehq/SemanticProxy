@@ -1,6 +1,6 @@
 <?php
 
-use HelloFuture\SemanticProxy\Transformer\Value;
+use HelloFuture\SemanticProxy\Source\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

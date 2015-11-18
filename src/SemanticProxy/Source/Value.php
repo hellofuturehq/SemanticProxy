@@ -1,8 +1,6 @@
 <?php
 
-namespace HelloFuture\SemanticProxy\Transformer;
-
-use HelloFuture\SemanticProxy\Source\AbstractSource;
+namespace HelloFuture\SemanticProxy\Source;
 
 class Value extends AbstractSource {
 

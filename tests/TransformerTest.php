@@ -1,14 +1,14 @@
 <?php
 
 use HelloFuture\SemanticProxy\Exceptions\Exception as ValidationException;
+use HelloFuture\SemanticProxy\Source\Value;
 use HelloFuture\SemanticProxy\Transformer\AbstractTransformer;
-use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class TransformerTest extends PHPUnit_Framework_TestCase {
 
-	const VALUE_CLASS = 'HelloFuture\\SemanticProxy\\Transformer\\Value';
+	const VALUE_CLASS = 'HelloFuture\\SemanticProxy\\Source\\Value';
 	const INPUT_IF    = 'HelloFuture\\SemanticProxy\\InputInterface';
 	const OUTPUT_IF   = 'HelloFuture\\SemanticProxy\\OutputInterface';
 
@@ -99,7 +99,7 @@ class TransformerTest extends PHPUnit_Framework_TestCase {
 		$transformer1 = new Value('foo23');
 		$expected = [
 			(object) [
-				'class'   => 'HelloFuture\\SemanticProxy\\Transformer\\Value',
+				'class'   => self::VALUE_CLASS,
 				'options' => ['value' => 'foo23']
 			],
 		];
@@ -112,7 +112,7 @@ class TransformerTest extends PHPUnit_Framework_TestCase {
 				'options' => []
 			],
 			(object) [
-				'class'   => 'HelloFuture\\SemanticProxy\\Transformer\\Value',
+				'class'   => self::VALUE_CLASS,
 				'options' => ['value' => 'foo23']
 			],
 		];

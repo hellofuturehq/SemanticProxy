@@ -1,8 +1,8 @@
 <?php
 
 use HelloFuture\SemanticProxy\Cache\FileCache;
+use HelloFuture\SemanticProxy\Source\Value;
 use HelloFuture\SemanticProxy\Transformer\AbstractTransformer;
-use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
