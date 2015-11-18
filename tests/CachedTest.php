@@ -83,7 +83,6 @@ class CachedTest extends PHPUnit_Framework_TestCase {
 
 	// test write error (when not in loose mode)
 	// test read error  (when not in loose mode)
-	// lvl2 ?
 
 }
 

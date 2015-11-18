@@ -11,49 +11,29 @@ abstract class AbstractSource implements OutputInterface {
 	private $meta    = [];
 
 	public function __construct($options = []) {
-		$this->options = $options);
+		$this->options = array_merge($this->getDefaultOptions(), $options);
 		if (!$this->validateOptions()) {
 			throw new InvalidOptionsException('invalid call of ' . get_class($this));
 		}
 	}
 
-	static public function create($input, $options = array()) {
+	static public function create($input, $options = []) {
 		return new static($input, $options);
 	}
 
-	public function to($className, $options = array()) {
+	public function to($className, $options = []) {
 		return new $className($this, $options);
 	}
 
-	final public function getInner() {
-		return $this->innerTransformer;
-	}
+	abstract public function getData();
 
-	public function getInputData() {
-		if ($this->getInner()) {
-			return $this->getInner()->getData();
-		} else {
-			return $this->inputData;
-		}
-	}
-
-	public function getOutputData() {
-		return $this->transform($this->getInputData());
-	}
-
-	final public function getData() {
-		return $this->getOutputData();
-	}
-
-	final public function getScent() {
-		$inner = $this->getInner();
-		if ($inner) {
-			$path = $inner->getScent();
-		} else {
-			$path = [(object) ['data' => $this->getData(), 'options' => $this->getOptions()]];
-		}
-		array_push($path, (object) ['class' => get_class($this), 'options' => $this->getOptions()]);
-		return $path;
+	public function getScent() {
+		return [
+			(object) [
+				'class'   => get_class($this),
+				'options' => $this->getOptions()
+			]
+		];
 	}
 
 	final public function getOptions() {
@@ -82,7 +62,10 @@ abstract class AbstractSource implements OutputInterface {
 		$this->meta[$key] = $value;
 	}
 
-	abstract protected function transform($inputData);
+
+	public function getDefaultOptions() {
+		return [];
+	}
 
 	public function validateOptions() {
 		foreach($this->optionRules() as $option => $pattern) {

@@ -6,6 +6,6 @@ interface InputInterface {
 
 	public function getInner();
 
-	public function getInputData();
+	public function getInnerData();
 
 }

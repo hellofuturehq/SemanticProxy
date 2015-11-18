@@ -22,7 +22,7 @@ class Cached extends AbstractTransformer {
 		return md5(json_encode($this->getScent()));
 	}
 
-	public function getInputData() {
+	public function getInnerData() {
 		$dataExists = false;
 		$cache      = $this->getMetaValue('cache');
 		$key        = $this->getMetaValue('cacheKey');
@@ -36,7 +36,7 @@ class Cached extends AbstractTransformer {
 		}
 		// read from inner transformer (default behaviour)
 		if (!$dataExists) {
-			$inputData = parent::getInputData();
+			$inputData = parent::getInnerData();
 			$cache->write($key, $inputData);
 		}
 		return $inputData;

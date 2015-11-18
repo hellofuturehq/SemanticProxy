@@ -6,9 +6,9 @@ use HelloFuture\SemanticProxy\Exceptions\Exception;
 
 class ExceptionCatcher extends AbstractTransformer {
 
-	public function getInputData() {
+	public function getInnerData() {
 		try {
-			$inputData = parent::getInputData();
+			$inputData = parent::getInnerData();
 		} catch(Exception $e) {
 			$inputData = null;
 			$this->setMetaValue('exception', $e);

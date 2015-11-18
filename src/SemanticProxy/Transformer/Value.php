@@ -2,10 +2,16 @@
 
 namespace HelloFuture\SemanticProxy\Transformer;
 
-class Value extends AbstractTransformer {
+use HelloFuture\SemanticProxy\Source\AbstractSource;
 
-	protected function transform($inputData) {
-		return $inputData;
+class Value extends AbstractSource {
+
+	public function __construct($mixed) {
+		parent::__construct(['value' => $mixed]);
+	}
+
+	public function getData() {
+		return $this->getOption('value');
 	}
 
 }

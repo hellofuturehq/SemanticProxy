@@ -6,39 +6,11 @@ use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-class CallTest extends PHPUnit_Framework_TestCase {
+class TransformerTest extends PHPUnit_Framework_TestCase {
 
-	public function testBasic() {
-		$transformer = new Value('foo42');
-
-		$this->assertSame('foo42', $transformer->getData());
-		$this->assertSame('foo42', $transformer->getInputData());
-		$this->assertSame('foo42', $transformer->getOutputData());
-		$this->assertNull($transformer->getInner());
-	}
-
-	public function testScent() {
-		$transformer = new Value('foo23');
-		$expectedScent = [
-			(object) [
-				'data'    => 'foo23',
-				'options' => []
-			],
-			(object) [
-				'class'   => 'HelloFuture\\SemanticProxy\\Transformer\\Value',
-				'options' => []
-			],
-		];
-
-		$this->assertEquals($expectedScent, $transformer->getScent());
-	}
-
-	public function testFactory() {
-		$transformer1 = new Value('foo42');
-		$transformer2 = Value::create('foo42');
-
-		$this->assertEquals($transformer1, $transformer2);
-	}
+	const VALUE_CLASS = 'HelloFuture\\SemanticProxy\\Transformer\\Value';
+	const INPUT_IF    = 'HelloFuture\\SemanticProxy\\InputInterface';
+	const OUTPUT_IF   = 'HelloFuture\\SemanticProxy\\OutputInterface';
 
 	public function testWrapping() {
 		$transformer1 = new Palindromify(
@@ -46,8 +18,7 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertSame('snowons', $transformer1->getData());
-		$this->assertSame('snow',    $transformer1->getInputData());
-		$this->assertSame('snowons', $transformer1->getOutputData());
+		$this->assertSame('snow',    $transformer1->getInnerData());
 
 		$transformer2 = new Duplicate($transformer1);
 
@@ -62,6 +33,21 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		);
 
 		$this->assertSame('snowsnowonswons', $transformer3->getData());
+		$this->assertSame('snowsnow',        $transformer3->getInnerData());
+		$this->assertSame('snowsnow',        $transformer3->getInner()->getData());
+		$this->assertSame('snow',            $transformer3->getInner()->getInnerData());
+
+		$this->assertInstanceOf('Palindromify',    $transformer3);
+		$this->assertInstanceOf('Duplicate',       $transformer3->getInner());
+		$this->assertInstanceOf(self::VALUE_CLASS, $transformer3->getInner()->getInner());
+
+		$this->assertInstanceOf(self::INPUT_IF, $transformer3);
+		$this->assertInstanceOf(self::INPUT_IF, $transformer3->getInner());
+		$this->assertNotInstanceOf(self::INPUT_IF, $transformer3->getInner()->getInner());
+		$this->assertInstanceOf(self::OUTPUT_IF, $transformer3);
+		$this->assertInstanceOf(self::OUTPUT_IF, $transformer3->getInner());
+		$this->assertInstanceOf(self::OUTPUT_IF, $transformer3->getInner()->getInner());
+
 	}
 
 	public function testToMethod() {
@@ -83,21 +69,6 @@ class CallTest extends PHPUnit_Framework_TestCase {
 
 	}
 
-	public function testTraverse() {
-
-		$transformer1 = new Duplicate(
-			new Value('ice')
-		);
-
-		$transformer2 = new Palindromify($transformer1);
-
-		$this->assertSame($transformer2->getInner(), $transformer1);
-		$this->assertInstanceOf('HelloFuture\\SemanticProxy\\Transformer\\AbstractTransformer', $transformer1->getInner());
-		$this->assertInstanceOf('HelloFuture\\SemanticProxy\\Transformer\\AbstractTransformer', $transformer2->getInner()->getInner());
-		$this->assertNull($transformer1->getInner()->getInner());
-		$this->assertSame($transformer1->getData(), $transformer2->getInputData());
-	}
-
 	public function testOptions() {
 
 		$transformer1 = Value::create('cold')->to('Repeat', ['number' => 3]);
@@ -106,18 +77,46 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame('coldcoldcold', $transformer1->getData());
 
 		$expected = ['number' => 3];
-
 		$this->assertEquals($expected, $transformer1->getOptions());
+
+		$expected = ['value' => 'cold'];
+		$this->assertEquals($expected, $transformer1->getInner()->getOptions());
 
 		// unknown param
 
 		$this->assertNull($transformer1->getOption('unknown'));
-		$this->assertSame('?', $transformer1->getOption('unknown', '?'));
+		$this->assertSame('DEFAULT', $transformer1->getOption('unknown', 'DEFAULT'));
 
 		// default param
 
 		$transformer2 = Value::create('chilly')->to('Repeat');
 		$this->assertSame(1, $transformer2->getOption('number'));
+
+	}
+
+
+	public function testScent() {
+		$transformer1 = new Value('foo23');
+		$expected = [
+			(object) [
+				'class'   => 'HelloFuture\\SemanticProxy\\Transformer\\Value',
+				'options' => ['value' => 'foo23']
+			],
+		];
+		$this->assertEquals($expected, $transformer1->getScent());
+
+		$transformer2 = new Palindromify($transformer1);
+		$expected = [
+			(object) [
+				'class'   => 'Palindromify',
+				'options' => []
+			],
+			(object) [
+				'class'   => 'HelloFuture\\SemanticProxy\\Transformer\\Value',
+				'options' => ['value' => 'foo23']
+			],
+		];
+		$this->assertEquals($expected, $transformer2->getScent());
 
 	}
 

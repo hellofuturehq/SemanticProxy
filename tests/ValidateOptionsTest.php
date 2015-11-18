@@ -1,7 +1,7 @@
 <?php
 
 use HelloFuture\SemanticProxy\Exceptions\Exception as ValidationException;
-use HelloFuture\SemanticProxy\Transformer\AbstractTransformer;
+use HelloFuture\SemanticProxy\Source\AbstractSource;
 use HelloFuture\SemanticProxy\Transformer\Value;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -13,7 +13,7 @@ class ValidateOptionsTest extends PHPUnit_Framework_TestCase {
 			'mol' => 42,
 			'url' => 'https://thats/a/valid/url/for/picky',
 		];
-		$transformer = new PickyTransformer(null, $options);
+		$transformer = new PickySource($options);
 		$this->assertSame(42, $transformer->getOption('mol'));
 	}
 
@@ -21,7 +21,7 @@ class ValidateOptionsTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException HelloFuture\SemanticProxy\Exceptions\InvalidOptionsException
 	 */
 	public function testInvalidOptionsA() {
-		$transformer = new PickyTransformer(null);
+		$transformer = new PickySource();
 	}
 
 	/**
@@ -32,15 +32,15 @@ class ValidateOptionsTest extends PHPUnit_Framework_TestCase {
 			'mol' => 42,
 			'url' => 'ftp://thats/no/valid/url/for/picky',
 		];
-		$transformer = new PickyTransformer(null, $options);
+		$transformer = new PickySource($options);
 	}
 
 }
 
-class PickyTransformer extends AbstractTransformer {
+class PickySource extends AbstractSource {
 
-	public function transform($inputData) {
-		return $inputData;
+	public function getData() {
+		return null;
 	}
 
 	public function optionRules() {
