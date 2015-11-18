@@ -1,26 +1,17 @@
 <?php
 
-namespace HelloFuture\SemanticProxy\Transformer;
+namespace HelloFuture\SemanticProxy\Source;
 
 use HelloFuture\SemanticProxy\Exceptions\InvalidOptionsException;
-use HelloFuture\SemanticProxy\InputInterface;
 use HelloFuture\SemanticProxy\OutputInterface;
 
-abstract class AbstractTransformer implements InputInterface, OutputInterface {
+abstract class AbstractSource implements OutputInterface {
 
-	private $innerTransformer = null;
-	private $options          = null;
-	private $inputData        = null;
-	private $outputData       = null;
-	private $meta             = [];
+	private $options = null;
+	private $meta    = [];
 
-	public function __construct(/* Transformer or mixed */ $input, $options = array()) {
-		if (is_a($input, 'HelloFuture\\SemanticProxy\\Transformer\\TransformerInterface')) {
-			$this->innerTransformer = $input;
-		} else {
-			$this->inputData = $input;
-		}
-		$this->options = array_merge($this->getDefaultOptions(), $options);
+	public function __construct($options = []) {
+		$this->options = $options);
 		if (!$this->validateOptions()) {
 			throw new InvalidOptionsException('invalid call of ' . get_class($this));
 		}
@@ -32,10 +23,6 @@ abstract class AbstractTransformer implements InputInterface, OutputInterface {
 
 	public function to($className, $options = array()) {
 		return new $className($this, $options);
-	}
-
-	public function getDefaultOptions() {
-		return [];
 	}
 
 	final public function getInner() {
