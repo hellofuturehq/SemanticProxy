@@ -2,9 +2,9 @@
 
 namespace HelloFuture\SemanticProxy\Transformer;
 
-interface TransformerInterface {
+use HelloFuture\SemanticProxy\Source\SourceInterface;
 
-	public function getData();
+interface TransformerInterface extends SourceInterface {
 
 	public function getInner();
 
