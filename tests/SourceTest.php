@@ -51,6 +51,26 @@ class CallTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $transformer->getScent());
 	}
 
+	public function testValid() {
+		$transformer = new OddSource(7);
+		$this->assertEquals(7, $transformer->getData());
+	}
+
+	/**
+	 * @expectedException HelloFuture\SemanticProxy\Exceptions\InvalidOptionsException
+	 */
+	public function testInvalid() {
+		$transformer = new OddSource(8);
+		$this->assertEquals(8, $transformer->getData());
+	}
+
+	/**
+	 * @expectedException HelloFuture\SemanticProxy\Exceptions\InvalidOptionsException
+	 */
+	public function testAlwaysInvalid() {
+		$transformer = new InvalidSourceTest;
+	}
+
 }
 
 class OptionTest extends AbstractSource {
@@ -61,6 +81,26 @@ class OptionTest extends AbstractSource {
 
 	public function getDefaultOptions() {
 		return ['default' => 'tohuwabohu'];
+	}
+
+}
+
+class InvalidSourceTest extends AbstractSource {
+
+	public function getData() {
+		return 'void';
+	}
+
+	public function validateOptions() {
+		return false;
+	}
+
+}
+
+class OddSource extends Value {
+
+	public function optionRules() {
+		return ['value' => '/^\d*[13579]$/'];
 	}
 
 }
