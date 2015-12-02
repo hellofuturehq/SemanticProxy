@@ -9,10 +9,8 @@ use HelloFuture\SemanticProxy\Source\AbstractSource;
 
 abstract class AbstractTransformer extends AbstractSource implements InputInterface {
 
-	private $innerTransformer = null;
-	private $options          = null;
-	private $outputData       = null;
-	private $meta             = [];
+	protected $innerTransformer = null;
+	protected $outputData       = null;
 
 	public function __construct(OutputInterface $input, $options = array()) {
 		$this->innerTransformer = $input;
@@ -36,5 +34,13 @@ abstract class AbstractTransformer extends AbstractSource implements InputInterf
 	}
 
 	abstract protected function transform($inputData);
+
+	public function getMetaValue($key, $default = null) {
+		if (isset($this->meta[$key])) {
+			return $this->meta[$key];
+		} else {
+			return $this->getInner()->getMetaValue($key, $default);
+		}
+	}
 
 }
