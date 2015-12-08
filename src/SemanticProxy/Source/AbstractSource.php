@@ -17,7 +17,7 @@ abstract class AbstractSource implements OutputInterface {
 		}
 	}
 
-	static public function create($input, $options = []) {
+	static public function create($input = null, $options = []) {
 		return new static($input, $options);
 	}
 
